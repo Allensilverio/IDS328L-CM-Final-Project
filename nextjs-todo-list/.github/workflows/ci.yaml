@@ -1,0 +1,47 @@
+name: ci
+
+on: 
+  pull_request:
+    branches: [development]
+    types: [closed]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder for Build
+        run: echo "Build step placeholder" # Esto es un placeholder, reemplázalo con tus pasos de construcción reales
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        uses: actions/checkout@v2 # Asegúrate de que 'uses' esté alineado correctamente bajo 'steps'
+      - run: npm install # 'run' debe estar al mismo nivel que 'name' y 'uses'
+      
+      - name: Test
+        run: npm test
+
+  buildDockerImage:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile # Asegúrate de que la ruta al Dockerfile sea correcta
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
