@@ -1,6 +1,7 @@
 import { Database } from '@/lib/schema'
 import { Session, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
+import React from 'react'
 
 type Todos = Database['public']['Tables']['todos']['Row']
 
