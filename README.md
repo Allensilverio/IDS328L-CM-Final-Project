@@ -1,4 +1,4 @@
-# Todo example using Supabase  test
+# Todo example using Supabase test pipe
 
 - Frontend:
   - [Next.js](https://github.com/vercel/next.js) - a React framework for production.
