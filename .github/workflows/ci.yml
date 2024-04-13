@@ -36,9 +36,6 @@ jobs:
         with:
           context: .
           file: ./dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:amd64-latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:arm64-latest
+          push: true 
+          tags:  ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:v1.0
           platforms: linux/amd64,linux/arm64
