@@ -31,11 +31,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Get the commit SHA
+        run: echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./dockerfile
+          file: ./Dockerfile
           push: true 
-          tags:  ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:v1.0
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:${{ env.COMMIT_SHA }}
           platforms: linux/amd64,linux/arm64
