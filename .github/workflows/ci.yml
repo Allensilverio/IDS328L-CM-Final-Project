@@ -33,12 +33,16 @@ jobs:
 
       - name: Verify and Create Initial Tag if Missing
         run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           if ! git rev-parse ${{ env.INITIAL_VERSION }} >/dev/null 2>&1; then
             git tag ${{ env.INITIAL_VERSION }}
             git push origin ${{ env.INITIAL_VERSION }}
           fi
         env:
           INITIAL_VERSION: 'v1.0.0'
+          GIT_ASKPASS: echo ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      
       
       - name: Calculate next version
         id: next-version
