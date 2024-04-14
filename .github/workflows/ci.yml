@@ -31,11 +31,20 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Calculate next version
+        id: next-version
+        uses: anothrNick/github-tag-action@1.37.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: dev
+          INITIAL_VERSION: 'v1.0.0'
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./dockerfile
-          push: true 
-          tags:  ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:v1.0
+          push: true
+          tags:  ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:${{ steps.next-version.outputs.new_tag }}
           platforms: linux/amd64,linux/arm64
