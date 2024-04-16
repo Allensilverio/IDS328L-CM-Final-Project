@@ -1,4 +1,4 @@
-# CODEOWNERS file en la rama desarrollo
+# CODEOWNERS file en la rama qa
 
-# Dueños de la rama desarrollo, Desarrollador Senior
-* @allensilverio
+# Dueños de la rama qa, Tester Senior
+* @pazzispb
