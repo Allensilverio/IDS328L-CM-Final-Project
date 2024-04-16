@@ -27,7 +27,11 @@ jobs:
         run: npm test
 
       - name: Create Relese
-        run: npx semantic-release
+        run: |
+          VERSION=$(npx semantic-release | grep "The next release version is" | sed -n -e 's/^.*version is //p')
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
+          echo "::set-output name=version::$VERSION"
+        id: semantic
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
