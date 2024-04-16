@@ -55,7 +55,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./dockerfile
           push: true 
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:${{steps.latest-tag.outputs.LATEST_TAG}}${{ env.COMMIT_SHA }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ids328l-cm-final-project:${{steps.latest-tag.outputs.LATEST_TAG}} - ${{ env.COMMIT_SHA }}
           platforms: linux/amd64,linux/arm64
